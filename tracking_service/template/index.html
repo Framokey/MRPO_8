@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Отслеживание книг</title>
+</head>
+<body>
+    <nav>
+        <a href="{{ url_for('index') }}">Главная</a> |
+        <a href="{{ url_for('tracked_books_page') }}">Отслеживаемые книги</a> |
+    </nav>
+    <h1>Отслеживание книг</h1>
+    <form action="/" method="post">
+        <label for="library_address">Адрес библиотеки:</label>
+        <input type="text" id="library_address" name="library_address" required>
+        <br>
+        <label for="book_title">Название книги:</label>
+        <input type="text" id="book_title" name="book_title" required>
+        <br>
+        <input type="submit" value="Добавить в отслеживание">
+    </form>
+</body>
+</html>

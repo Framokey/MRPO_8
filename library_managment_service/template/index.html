@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Главная страница</title>
+</head>
+<body>
+    <nav>
+        <a href="{{ url_for('index') }}">Главная</a> |
+        <a href="{{ url_for('add_book') }}">Добавить книгу</a> |
+        <a href="{{ url_for('add_reader') }}">Добавить читателя</a> |
+        <a href="{{ url_for('readers') }}">Все читатели</a>
+    </nav>
+    <h1>Выберите библиотеку</h1>
+    <form action="/" method="post">
+        <div>
+            <label for="library">Выберите библиотеку:</label>
+            <select name="library" id="library">
+                {% for library in libraries %}
+                <option value="{{ library }}">{{ library }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <input type="submit" value="Отправить">
+    </form>
+</body>
+</html>

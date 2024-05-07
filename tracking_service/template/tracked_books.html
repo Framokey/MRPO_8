@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Отслеживаемые книги</title>
+</head>
+<body>
+    <nav>
+        <a href="{{ url_for('index') }}">Главная</a> |
+        <a href="{{ url_for('tracked_books_page') }}">Отслеживаемые книги</a> |
+    </nav>
+    <h1>Отслеживаемые книги</h1>
+    <ul>
+        {% for library, books in tracked_books.items() %}
+            <li>Библиотека: {{ library }}</li>
+            <ul>
+                {% for book in books %}
+                    <li>{{ book }}</li>
+                {% endfor %}
+            </ul>
+        {% endfor %}
+    </ul>
+</body>
+</html>
