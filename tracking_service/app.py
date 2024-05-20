@@ -57,9 +57,8 @@ def check_books():
     with open('tracked_books.json', 'r') as file:
         tracked_books_data = json.load(file)
 
-    response = requests.post('http://localhost:5000/check_books', json=tracked_books_data, content_type=json)
-
+    response = requests.post('http://localhost:5000/check_books', json=tracked_books_data)
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=5001)

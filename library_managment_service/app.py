@@ -41,28 +41,25 @@ print(library_repo.get_all_addresses())
 @app.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
-        print('im here')
-        selected_library = request.form.get('library')
+        selected_library = request.form.get('library_address')
         print(selected_library)
         return redirect(url_for('books', library_address=selected_library))
-
     return render_template('index.html', libraries=library_repo.get_all_addresses())
 
 
 @app.route('/add_book', methods=['GET', 'POST'])
 def add_book():
     if request.method == 'POST':
-        title = request.form['title']
-        author_name = request.form['author_name']
+        book_title = request.form['book_title']
         library_address = request.form['library_address']
-        book = Book(title, author_name)
-        author = author_repo.get_one_by_name(author_name)
-        library = library_repo.get_one_by_address(library_address)
-        book.author = author
-        book.library = library
+        year_published = request.form['year_published']
+        book = Book(len(book_repo.books), book_title, 'Петр Петров', year_published)
         book_repo.create_one(book)
-        return redirect(url_for('home'))
-    return render_template('add_book.html')
+        library = library_repo.get_library_by_address(library_address)
+        library.add_book(book)
+
+        return redirect(url_for('index'))
+    return render_template('add_book.html', libraries=library_repo.get_all_addresses())
 
 
 @app.route('/add_reader', methods=['GET', 'POST'])
@@ -83,9 +80,7 @@ def readers():
 
 @app.route('/books/<library_address>')
 def books(library_address):
-    print(library_address)
     books = library_repo.get_books_from_library(library_address)
-    print(1, books)
     return render_template('books.html', books=books[0], library_address=library_address)
 
 @app.route('/check_books', methods=['POST'])

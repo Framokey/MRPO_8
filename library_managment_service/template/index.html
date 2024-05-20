@@ -14,8 +14,8 @@
     <h1>Выберите библиотеку</h1>
     <form action="/" method="post">
         <div>
-            <label for="library">Выберите библиотеку:</label>
-            <select name="library" id="library">
+            <label for="library_address">Выберите библиотеку:</label>
+            <select name="library_address" id="library_address">
                 {% for library in libraries %}
                 <option value="{{ library }}">{{ library }}</option>
                 {% endfor %}

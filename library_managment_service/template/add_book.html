@@ -1,0 +1,24 @@
+<!-- add_book.html -->
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Добавление книги</title>
+</head>
+<body>
+    <h2>Добавить книгу</h2>
+    <form action="/add_book" method="post">
+        <label for="library_address">Выберите библиотеку:</label><br>
+        <select id="library_address" name="library_address" required>
+            {% for library in libraries %}
+                <option value="{{ library }}">{{ library }}</option>
+            {% endfor %}
+        </select><br>
+        <label for="book_title">Название книги:</label><br>
+        <input type="text" id="book_title" name="book_title" required><br>
+        <label for="year_published">Год публикации:</label><br>
+        <input type="number" id="year_published" name="year_published" required><br>
+        <input type="submit" value="Добавить книгу">
+    </form>
+</body>
+</html>
