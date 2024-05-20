@@ -6,6 +6,10 @@
     <title>Добавление книги</title>
 </head>
 <body>
+    <nav>
+        <a href="{{ url_for('index') }}">Главная</a> |
+        <a href="{{ url_for('add_book') }}">Добавить книгу</a> |
+    </nav>
     <h2>Добавить книгу</h2>
     <form action="/add_book" method="post">
         <label for="library_address">Выберите библиотеку:</label><br>

@@ -15,7 +15,7 @@
             <li>Библиотека: {{ library }}</li>
             <ul>
                 {% for book in books %}
-                    <li>{{ book }}</li>
+                    <li>Книга: {{ book.name }} - {{ book.status}} </li>
                 {% endfor %}
             </ul>
         {% endfor %}

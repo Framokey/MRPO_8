@@ -11,9 +11,12 @@
     </nav>
     <h1>Отслеживание книг</h1>
     <form action="/" method="post">
-        <label for="library_address">Адрес библиотеки:</label>
-        <input type="text" id="library_address" name="library_address" required>
-        <br>
+        <label for="library_address">Выберите библиотеку:</label><br>
+        <select id="library_address" name="library_address" required>
+            {% for library in libraries %}
+                <option value="{{ library.address }}">{{ library.address }}</option>
+            {% endfor %}
+        </select><br>
         <label for="book_title">Название книги:</label>
         <input type="text" id="book_title" name="book_title" required>
         <br>

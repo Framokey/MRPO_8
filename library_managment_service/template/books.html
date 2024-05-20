@@ -5,6 +5,10 @@
     <title>Книги в библиотеке</title>
 </head>
 <body>
+    <nav>
+        <a href="{{ url_for('index') }}">Главная</a> |
+        <a href="{{ url_for('add_book') }}">Добавить книгу</a> |
+    </nav>
     <h1>Книги в библиотеке {{ library_address }}</h1>
     <table>
         <thead>

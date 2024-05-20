@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, json, Response
+from flask import Flask, render_template, request, redirect, url_for, json, Response, jsonify
 from models import *
 from repository import *
 
@@ -35,14 +35,10 @@ library_repo.libraries[0].add_book(book_repo.books[1])
 library_repo.libraries[1].add_book(book_repo.books[2])
 library_repo.libraries[1].add_book(book_repo.books[3])
 
-print(library_repo.get_books_from_library('Улица Библиотечная, 1'))
-print(library_repo.get_all_addresses())
-
 @app.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
         selected_library = request.form.get('library_address')
-        print(selected_library)
         return redirect(url_for('books', library_address=selected_library))
     return render_template('index.html', libraries=library_repo.get_all_addresses())
 
@@ -83,18 +79,36 @@ def books(library_address):
     books = library_repo.get_books_from_library(library_address)
     return render_template('books.html', books=books[0], library_address=library_address)
 
+
 @app.route('/check_books', methods=['POST'])
 def check_books():
     # Получаем данные из запроса
     data = request.json
 
+    # Инициализация списка результатов
+    results = {}
 
-    # for lib in library_repo.libraries:
-    #     if lib.address == library_address:
-    #         for book in lib.books:
-    #             if book.title == book_title:
-    #                 return Response("Книга найдена", status=200)
-    # return Response("Книга не найдена", status=404)
+    # Проходим по каждому адресу библиотеки из запроса
+    for address, books in data.items():
+        # Находим книги по названиям в репозитории
+        found_books = library_repo.find_books_by_titles([book['name'] for book in books])
+
+        # Обновляем статусы книг
+        status_updates = {book['name']: "В наличии" if book['name'] in found_books else "Нет в наличии" for book in books}
+
+        # Сохраняем обновленные статусы в исходный формат
+        updated_books = [{"name": name, "status": status} for name, status in status_updates.items()]
+
+        # Добавляем обновленные книги в результаты
+        results[address] = updated_books
+
+    # Возвращаем результаты
+    return jsonify(results)
+
+
+@app.route('/libraries', methods=['GET'])
+def libraries():
+    return json.dumps({"libraries": [{"address": a.address} for a in library_repo.get_all()]}, indent=4)
 
 
 if __name__ == '__main__':
